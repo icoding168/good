@@ -33,7 +33,6 @@ Traceback:
 */
 
 import (
-	"errors"
 	"fmt"
 	"geeorm/session"
 	"html/template"
@@ -80,10 +79,10 @@ func main() {
 		defer engine.Close()
 		s := engine.NewSession()
 		_ = s.Model(&User{}).DropTable()
+		_ = s.Model(&User{}).CreateTable()
 		_, err = engine.Transaction(func(s *session.Session) (result interface{}, err error) {
-			_ = s.Model(&User{}).CreateTable()
-			_, err = s.Insert(&User{"Tom", 18})
-			return nil, errors.New("Error")
+			_, err = s.Model(&User{}).Insert(&User{"Tom", 18})
+			return nil, nil
 		})
 
 		if err == nil || s.HasTable() {
