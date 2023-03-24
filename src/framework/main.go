@@ -82,7 +82,7 @@ func main() {
 		_ = s.Model(&User{}).CreateTable()
 		_, err = engine.Transaction(func(s *session.Session) (result interface{}, err error) {
 			_, err = s.Model(&User{}).Insert(&User{"Tom", 18})
-			return nil, nil
+			return nil, err
 		})
 
 		if err == nil || s.HasTable() {
